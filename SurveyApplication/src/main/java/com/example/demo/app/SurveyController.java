@@ -17,6 +17,11 @@ public class SurveyController {
 		model.addAttribute("title", "Survey Form");
 		return "survey/form";	
 	}
+	@PostMapping("/form")
+	public String formGoBack(SurveyForm surveyForm, Model model) { 
+		model.addAttribute("title", "Survey Form");
+		return "survey/form";	
+	}
 	@PostMapping("/confirm")
 	public String confirm(@Validated SurveyForm surveyForm, BindingResult result, Model model) {
 		if(result.hasErrors()) {
