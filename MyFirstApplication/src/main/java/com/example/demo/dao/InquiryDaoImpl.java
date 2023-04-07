@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,6 @@ public class InquiryDaoImpl implements InquiryDao {
 	public void insertInquiry(Inquiry inquiry) {
 		jdbcTemplate.update("INSERT INTO inquiry(name, email, contents, created) VALUER(?, ?, ?, ?)", // 之後再決定內容
 				inquiry.getName(), inquiry.getEmail(), inquiry.getContents(), inquiry.getCreated());
-
 	}
 
 	@Override
@@ -36,9 +36,13 @@ public class InquiryDaoImpl implements InquiryDao {
 		for(Map<String, Object> result : resultlist ) {
 			Inquiry inquiry = new Inquiry();
 			inquiry.setId((int)result.get("id"));
-			
+			inquiry.setName((String)result.get("name"));
+			inquiry.setEmail((String)result.get("email"));
+			inquiry.setContents((String)result.get("contents"));
+			inquiry.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+			list.add(inquiry);
 		}
-		return null;
+		return list;
 	}
 
 }
