@@ -1,6 +1,7 @@
 package com.example.demo.app.inquiry;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,14 @@ public class InquiryController {
 	@Autowired
 	public InquiryController(InquiryService inquiryService) {
 		this.inquiryService = inquiryService;  // 初始化 InquiryService
+	}
+	
+	@GetMapping
+	public String index(Model model) {
+		List<Inquiry> list = inquiryService.getAll();
+		model.addAttribute("inquiryList", list);
+		model.addAttribute("title", "Inquiry Index");
+		return "inquiry/index";
 	}
 	
 	@GetMapping("/form")
